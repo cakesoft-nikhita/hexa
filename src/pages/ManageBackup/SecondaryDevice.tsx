@@ -14,6 +14,7 @@ import { AppBottomSheetTouchableWrapper } from '../../components/AppBottomSheetT
 import { useDispatch, useSelector } from 'react-redux';
 import { uploadEncMShare } from '../../store/actions/sss';
 import { EphemeralData } from '../../bitcoin/utilities/Interface';
+import TrustedContactsService from '../../bitcoin/services/TrustedContactsService';
 
 export default function SecondaryDeviceModelContents(props) {
   const [secondaryQR, setSecondaryQR] = useState('');
@@ -70,8 +71,11 @@ export default function SecondaryDeviceModelContents(props) {
           trustedContacts.tc.trustedContacts[contactName].publicKey;
         setSecondaryQR(
           JSON.stringify({
+            isGuardian: true,
+            requester: WALLET_SETUP.walletName,
             publicKey,
-            type: 'secondaryDeviceQR',
+            uploadedAt: SHARES_TRANSFER_DETAILS[0].UPLOADED_AT,
+            type: 'secondaryDeviceGuardian',
           }),
         );
       } else {
